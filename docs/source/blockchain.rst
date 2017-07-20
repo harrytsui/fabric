@@ -39,7 +39,7 @@ across many network participants, each of whom **collaborate** in its maintenanc
 We’ll see that decentralization and collaboration are powerful attributes that
 mirror the way businesses exchange goods and services in the real world.
 
-一个区块链账本通常被描述为**去中心化的**，因为在众多网络参与者中账本是重复的，每个参与者都**协作**账本的维护。
+一个区块链账本通常被描述为 **去中心化的** ，因为在众多网络参与者中账本是重复的，每个参与者都**协作**账本的维护。
 我们会发现去中心化和协作性，正反映了在真实商业世界中交换商品和服务的强大属性。
 
 .. image:: images/basic_network.png
@@ -58,7 +58,7 @@ To support the consistent update of information – and to enable a whole host o
 ledger functions (transacting, querying, etc) – a blockchain network uses **smart
 contracts** to provide controlled access to the ledger.
 
-为了支持信息的一致更新 - 实现大量的账本功能（交易，查询等）- 区块链网络用**智能合约**来提供账本的受限访问。
+为了支持信息的一致更新 - 实现大量的账本功能（交易，查询等）- 区块链网络用 **智能合约** 来提供账本的受限访问。
 
 .. image:: images/Smart_Contract.png
 
