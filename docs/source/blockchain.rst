@@ -19,9 +19,9 @@ Once comfortable -- or if you're already familiar with blockchain and
 Hyperledger Fabric -- go to :doc:`getting_started` and from there explore the
 demos, technical specifications, APIs, etc.
 
-What is a Blockchain?
+什么是区块链
 ---------------------
-**A Distributed Ledger**
+**分布式账本**
 
 At the heart of a blockchain network is a distributed ledger that records all
 the transactions that take place on the network.
