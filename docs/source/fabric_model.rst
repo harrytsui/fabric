@@ -4,6 +4,8 @@ Hyperledger Fabric Model
 This section outlines the key design features woven into Hyperledger Fabric that
 fulfill its promise of a comprehensive, yet customizable, enterprise blockchain solution:
 
+这部分概述了Hyperledger Fabric关键设计特征，这些特征履行了对于一个综合的，可定制的企业区块链的承诺：
+
 * :ref:`Assets` - Asset definitions enable the exchange of almost anything with
   monetary value over the network, from whole foods to antique cars to currency
   futures.
@@ -21,6 +23,13 @@ fulfill its promise of a comprehensive, yet customizable, enterprise blockchain 
   be detected and traced by authorized regulators and auditors.
 * :ref:`Consensus` - a unique approach to consensus enables the
   flexibility and scalability needed for the enterprise.
+  
+  资产 - 资产的定义使得网络上几乎所有的交换都有了货币价值，从食品到老爷车再到货币期货。
+  Chaincode - 执行Chaincode被从交易的排序分开，限制不同节点所需的信任和验证级别，优化网络可拓展性和性能。
+  账本特征 - 不可变的，共享的账本组成了每一个通道的交易历史，还包括类似于SQL查询的能力来有效地审查和解决纠纷。
+  通道间的隐私 - 通道允许高度隐私和机密性的多边交易，相互竞争的企业和和受管制的行业需要这些性质来在平常的网络上交易资产。
+  安全会员服务 - 许可的会员提供了可信赖的区块链网络，在此网络中参与者知道所有的交易可以被监管审查人员检测和追踪。
+  共识 - 特殊的共识满足了企业对于灵活性和可拓展性的需求。
 
 .. _Assets:
 
