@@ -2,6 +2,7 @@ Architecture Explained
 ======================
 
 The Hyperledger Fabric architecture delivers the following advantages:
+Hyperledger Fabric架构传达了以下优势：
 
 -  **Chaincode trust flexibility.** The architecture separates *trust
    assumptions* for chaincodes (blockchain applications) from trust
@@ -27,18 +28,18 @@ The Hyperledger Fabric architecture delivers the following advantages:
    pluggable consensus (i.e., ordering service) implementations.
 
 **Part I: Elements of the architecture relevant to Hyperledger Fabric
-v1**
+v1 第一部分：与Hyperledger Fabric有关的架构基础原理**
 
-1. System architecture
-2. Basic workflow of transaction endorsement
-3. Endorsement policies
+1. System architecture 系统架构
+2. Basic workflow of transaction endorsement 基本的交易背书流程
+3. Endorsement policies 背书政策
 
    **Part II: Post-v1 elements of the architecture**
 
 4. Ledger checkpointing (pruning)
 
-1. System architecture
-----------------------
+1. System architecture 系统架构
+------------------------------
 
 The blockchain is a distributed system consisting of many nodes that
 communicate with each other. The blockchain runs programs called
@@ -48,6 +49,10 @@ on the chaincode. Transactions have to be "endorsed" and only endorsed
 transactions may be committed and have an effect on the state. There may
 exist one or more special chaincodes for management functions and
 parameters, collectively called *system chaincodes*.
+
+区块链是一个包含了很多彼此间通信的节点的分布式系统。区块链运行着称为chaincode的程序，持有全局状态和账本数据，
+执行交易。chaincode是中心元素，因为交易是由chaincode引发的操作完成的。交易需要背书，并且只有受背书的交易才有可能
+被提交，才有可能对全局状态有影响。或许存在一个或多个特定的chaincode来管理功能和参数，这些chaincode统称为 *system chaincodes* 。
 
 1.1. Transactions
 ~~~~~~~~~~~~~~~~~
