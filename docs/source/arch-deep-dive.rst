@@ -58,20 +58,30 @@ parameters, collectively called *system chaincodes*.
 ~~~~~~~~~~~~~~~~~
 
 Transactions may be of two types:
+交易分为以下两种类型：
 
 -  *Deploy transactions* create new chaincode and take a program as
    parameter. When a deploy transaction executes successfully, the
    chaincode has been installed "on" the blockchain.
+   
+-  *部署交易*  创建了新的chaincode，并将一个程序作为参数。当一个部署交易执行成功时，chaincode就会成功
+   部署在区块链上。
 
 -  *Invoke transactions* perform an operation in the context of
    previously deployed chaincode. An invoke transaction refers to a
    chaincode and to one of its provided functions. When successful, the
    chaincode executes the specified function - which may involve
    modifying the corresponding state, and returning an output.
+   
+-  *调用交易* 在之前已部署的chaincode内容上执行操作。调用交易指的是一个chaincode和一个chaincode所提供的
+   功能。当调用成功时，chaincode执行特定的功能 - 会涉及到修改相应的全局状态，和返回一个输出。
 
 As described later, deploy transactions are special cases of invoke
 transactions, where a deploy transaction that creates new chaincode,
 corresponds to an invoke transaction on a system chaincode.
+
+在随后的描述中，部署交易是特定类型的调用交易，其中部署交易创建一个新的chaincode，相对应的是在system chaincode
+上的调用交易。
 
 **Remark:** *This document currently assumes that a transaction either
 creates new chaincode or invokes an operation provided by *one* already
@@ -79,11 +89,14 @@ deployed chaincode. This document does not yet describe: a)
 optimizations for query (read-only) transactions (included in v1), b)
 support for cross-chaincode transactions (post-v1 feature).*
 
-1.2. Blockchain datastructures
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**备注:** *这份文档目前假设交易要么是创建一个新的chaincode，要么是在一个已经部署的chaincode上调用操作。
+这份文档还没有描述一下场景：a）对于查询交易的优化，b）对于跨chaincode交易的支持。 *
 
-1.2.1. State
-^^^^^^^^^^^^
+1.2. Blockchain datastructures 区块链数据结构
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1.2.1. State   状态
+^^^^^^^^^^^^^^^^^^^^^^
 
 The latest state of the blockchain (or, simply, *state*) is modeled as a
 versioned key/value store (KVS), where keys are names and values are
@@ -93,6 +106,9 @@ KVS-operations. The state is stored persistently and updates to the
 state are logged. Notice that versioned KVS is adopted as state model,
 an implementation may use actual KVSs, but also RDBMSs or any other
 solution.
+
+最新的区块链状态模型是一个版本控制的键/值数据（KVS），其中键指名字，值指任意的二进制区块。
+
 
 More formally, state ``s`` is modeled as an element of a mapping
 ``K -> (V X N)``, where:
