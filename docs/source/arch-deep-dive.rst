@@ -64,8 +64,8 @@ Transactions may be of two types:
    parameter. When a deploy transaction executes successfully, the
    chaincode has been installed "on" the blockchain.
    
--  *部署交易*  创建了新的chaincode，并将一个程序作为参数。当一个部署交易执行成功时，chaincode就会成功
-   部署在区块链上。
+-  *部署交易* 
+   创建了新的chaincode，并将一个程序作为参数。当一个部署交易执行成功时，chaincode就会成功部署在区块链上。
 
 -  *Invoke transactions* perform an operation in the context of
    previously deployed chaincode. An invoke transaction refers to a
@@ -73,8 +73,9 @@ Transactions may be of two types:
    chaincode executes the specified function - which may involve
    modifying the corresponding state, and returning an output.
    
--  *调用交易* 在之前已部署的chaincode内容上执行操作。调用交易指的是一个chaincode和一个chaincode所提供的
-   功能。当调用成功时，chaincode执行特定的功能 - 会涉及到修改相应的全局状态，和返回一个输出。
+-  *调用交易* 
+   在之前已部署的chaincode内容上执行操作。调用交易指的是一个chaincode和一个chaincode所提供的功能。
+   当调用成功时，chaincode执行特定的功能 - 会涉及到修改相应的全局状态，和返回一个输出。
 
 As described later, deploy transactions are special cases of invoke
 transactions, where a deploy transaction that creates new chaincode,
@@ -107,8 +108,9 @@ state are logged. Notice that versioned KVS is adopted as state model,
 an implementation may use actual KVSs, but also RDBMSs or any other
 solution.
 
-最新的区块链状态模型是一个版本控制的键/值数据（KVS），其中键指名字，值指任意的二进制区块。
-
+最新的区块链状态模型是一个版本控制的键/值数据（KVS），其中键指名字，值指任意的二进制区块。通过在区块链上运行的
+chaincodes ``put`` 和 ``get`` 的KVS操作来管理这些条目。这些状态将被永久保存，对于状态的更新操作会被记录到日志中。
+我们采用版本控制的KVS作为状态模型，具体实现时可以用实际的KVSs，或者RDBMSs等其他方案。
 
 More formally, state ``s`` is modeled as an element of a mapping
 ``K -> (V X N)``, where:
