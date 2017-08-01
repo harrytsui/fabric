@@ -1,32 +1,45 @@
-Writing Your First Application
-==============================
+Writing Your First Application  编写你的第一个程序
+================================================
 
 The goal of this document is to show the tasks and provide a baseline for writing
 your first application against a Hyperledger Fabric network.
+
+这篇文章展示了一些任务，并提供了针对Hyperledger Fabric网络编写第一个程序的基准。
 
 At the most basic level, applications on a blockchain network are what enable
 users to **query** a ledger (asking for specific records it contains), or to
 **update** it (adding records to it).
 
+最基本的情况，区块链网络的程序允许用户查询或者更新账本。
+
 Our application, composed in Javascript, leverages the Node.js SDK to interact
 with the network (where our ledger exists). This tutorial will guide you through
 the three steps involved in writing your first application.
+
+我们的程序由JavaScript写成，使用Node.js SDK与区块链网络交互。这篇教程会通过以下三个步骤指导你
+编写第一个程序。
 
   **1. Starting a test Hyperledger Fabric blockchain network.** We need some basic components
   in our network in order to query and update the ledger.  These components --
   a peer node, ordering node and Certificate Authority -- serve as the backbone of
   our network; we'll also have a CLI container used for a few administrative commands.
   A single script will download and launch this test network.
+  
+  1. 设立一个Hyperledger Fabric区块链测试网络。
 
   **2. Learning the parameters of the sample smart contract our app will use.** Our
   smart contracts contain various functions that allow us to interact with the ledger
   in different ways.  For example, we can read data holistically or on a more granular
   level.
+  
+  2. 了解我们程序使用的智能合约的参数。
 
   **3. Developing the application to be able to query and update records.**
   We provide two sample applications -- one for querying the ledger and another for
   updating it. Our apps will use the SDK APIs to interact with the network and
   ultimately call these functions.
+  
+  3. 开发能查询和更新记录的程序。
 
 After completing this tutorial, you should have a basic understanding of how
 an application, using the Hyperledger Fabric SDK for Node.js, is programmed
@@ -253,12 +266,15 @@ get whatever make, model, color, and owner correspond to that car.
 Great.  Now you should be comfortable with the basic query functions in the chaincode,
 and the handful of parameters in the query program.  Time to update the ledger...
 
-Updating the Ledger
--------------------
+Updating the Ledger  更新账本
+----------------------------
 
 Now that we’ve done a few ledger queries and added a bit of code, we’re ready to
 update the ledger. There are a lot of potential updates we could
 make, but let's just create a new car for starters.
+
+现在我们已经完成了一些账本的查询工作并且加上了一些代码，此时此刻我们准备好来更新账本了。
+我们可以做很多潜在的更新，但是我们还是从创建一个新的汽车开始。
 
 Ledger updates start with an application generating a transaction proposal.
 Just like query, a request is constructed to identify the channel ID,
@@ -266,16 +282,26 @@ function, and specific smart contract to target for the transaction. The program
 then calls the ``channel.SendTransactionProposal`` API to send the transaction proposal to the peer(s)
 for endorsement.
 
+账本更新是从程序创建交易提议开始的。正如query，构建一个请求来识别通道ID，功能，和针对交易的
+特定智能合约。程序调用channel.SendTransactionProposal API来发送交易提议给peer(s)作背书。
+
 The network (i.e. endorsing peer) returns a proposal response, which the application uses
 to build and sign a transaction request.  This request is sent to the ordering service by
 calling the ``channel.sendTransaction`` API.  The ordering service will bundle the transaction
 into a block and then "deliver" the block to all peers on a channel for validation.  (In our
 case we have only the single endorsing peer.)
 
+网络（也就是背书peer）返回一个提议响应，程序用这个来建立和签署一个交易请求。这个请求通过
+channel.sendTransaction API发送给ordering服务。ordering服务会将交易打包进入一个区块，
+并将区块发送给通道上的所有peers以作确认。
+
 Finally the application uses the ``eh.setPeerAddr`` API to connect to the peer's
 event listener port, and calls ``eh.registerTxEvent`` to register events associated
 with a specific transaction ID.  This API allows the application to know the fate of
 a transaction (i.e. successfully committed or unsuccessful).  Think of it as a notification mechanism.
+
+最后程序会使用eh.setPeerAddr API来连接peer的事件监听端口，并调用eh.registerTxEvent来注册特定交易ID的事件。
+这个API允许程序知道交易的最终成果（提交成果或者是失败）。我们可以把它当做一个提醒机制。
 
 .. note:: We don't go into depth here on a transaction's lifecycle.  Consult the
           :doc:`txflow` documentation for lower level details on how a transaction
