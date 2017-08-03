@@ -3,8 +3,12 @@ Membership Service Providers (MSP)
 
 The document serves to provide details on the setup and best practices for MSPs.
 
+这份文件旨在提供关于MSPs的设置和最佳实践的一些细节。
+
 Membership service provider (MSP) is a component that aims to offer an
 abstraction of a membership operation architecture.
+
+MSP旨在提供一种会员操作架构的抽象。
 
 In particular, MSP abstracts away all cryptographic mechanisms and protocols
 behind issuing and validating certificates, and user authentication. An
@@ -12,22 +16,33 @@ MSP may define their own notion of identity, and the rules by which those
 identities are governed (identity validation) and authenticated (signature
 generation and verification).
 
+特别的是，MSP抽象了所有的加密机制，分发和验证证书背后的协议，和用户身份验证。MSP或许
+会定义自己对于身份的概念，和身份管理和认证的规则。
+
 A Hyperledger Fabric blockchain network can be governed by one or more MSPs.
 This provides modularity of membership operations, and interoperability
 across different membership standards and architectures.
+
+Hyperledger Fabric区块链网络可以被一个或多个MSPs管理。其提供了模块化的会员操作，
+和跨不同会员标准和架构的互操作性。
 
 In the rest of this document we elaborate on the setup of the MSP
 implementation supported by Hyperledger Fabric, and discuss best practices
 concerning its use.
 
-MSP Configuration
------------------
+在接下来的部分，我们将详细介绍Hyperledger Fabric支持的MSP的设置，并讨论关于它的最佳实践。
+
+MSP Configuration  MSP配置
+--------------------------
 
 To setup an instance of the MSP, its configuration needs to be specified
 locally at each peer and orderer (to enable peer, and orderer signing),
 and on the channels to enable peer, orderer, client identity validation, and
 respective signature verification (authentication) by and for all channel
 members.
+
+为了设立一个MSP的实例，它的配置文件必须在每一个peer和order处被指定，同样需要在通道中指定
+配置文件来允许peer，order和client的身份认证，和通道所有成员各自的签名验证。
 
 Firstly, for each MSP a name needs to be specified in order to reference that MSP
 in the network (e.g. ``msp1``, ``org2``, and ``org3.divA``). This is the name under
@@ -36,6 +51,10 @@ organization division is to be referenced in a channel. This is also referred
 to as the *MSP Identifier* or *MSP ID*. MSP Identifiers are required to be unique per MSP
 instance. For example, shall two MSP instances with the same identifier be
 detected at the system channel genesis, orderer setup will fail.
+
+首先，每一个MSP需要一个特定的名字以在网络中引用（例如，msp1，org2，org3.divA）。这个名字表示了
+在通道中一个联盟，组织或者组织的分支的MSP会员规则。这也可用于MSP的标识符和MSP ID。每一个MSP的实例
+的标识符都要不同。例如，在通道初始阶段检测到两个MSP实例有相同的标识符，order设置将会失败。
 
 In the case of default implementation of MSP, a set of parameters need to be
 specified to allow for identity (certificate) validation and signature
@@ -69,11 +88,17 @@ verification. These parameters are deduced by
 
 *Valid*  identities for this MSP instance are required to satisfy the following conditions:
 
+有效的MSP实例标识符需要满足一下条件：
+
 - They are in the form of X.509 certificates with a verifiable certificate path to
   exactly one of the root of trust certificates
 - They are not included in any CRL
 - And they *list* one or more of the Organizational Units of the MSP configuration
   in the ``OU`` field of their X.509 certificate structure.
+  
+- 他们是X.509格式的证书，并有一个指向唯一的信任根证书的可验证路径。
+- 他们不在任何CRL。
+- 在他们的X.509证书结构中的OU域，他们展示了一个或多个MSP配置的组织单元
 
 For more information on the validity of identities in the current MSP implementation
 we refer the reader to :doc:`msp-identity-validity-rules`.
