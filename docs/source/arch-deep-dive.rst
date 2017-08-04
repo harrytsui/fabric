@@ -136,6 +136,8 @@ KVS operations are modeled as follows:
 
 State is maintained by peers, but not by orderers and clients.
 
+状态是由peers维护的，而不是orders和client。
+
 **State partitioning.** Keys in the KVS can be recognized from their
 name to belong to a particular chaincode, in the sense that only
 transaction of a certain chaincode may modify the keys belonging to this
@@ -143,19 +145,26 @@ chaincode. In principle, any chaincode can read the keys belonging to
 other chaincodes. *Support for cross-chaincode transactions, that modify
 the state belonging to two or more chaincodes is a post-v1 feature.*
 
-1.2.2 Ledger
-^^^^^^^^^^^^
+**状态分区** 可以从KVS中键的名字识别出属于哪一个特定的chaincode，就此而言chaincode的交易
+只能修改属于此chaincode的键。一般而言，任何chaincode都可以读取属于其他chaincode的键。
+
+1.2.2 Ledger  账本
+^^^^^^^^^^^^^^^^^^
 
 Ledger provides a verifiable history of all successful state changes (we
 talk about *valid* transactions) and unsuccessful attempts to change
 state (we talk about *invalid* transactions), occurring during the
 operation of the system.
 
+账本记录提供了可验证的历史记录，包括所有成功的状态改变和试图去改变状态的不成功的尝试。
+
 Ledger is constructed by the ordering service (see Sec 1.3.3) as a
 totally ordered hashchain of *blocks* of (valid or invalid)
 transactions. The hashchain imposes the total order of blocks in a
 ledger and each block contains an array of totally ordered transactions.
 This imposes total order across all transactions.
+
+
 
 Ledger is kept at all peers and, optionally, at a subset of orderers. In
 the context of an orderer we refer to the Ledger as to
@@ -175,8 +184,8 @@ The ledger allows peers to replay the history of all transactions and to
 reconstruct the state. Therefore, state as described in Sec 1.2.1 is an
 optional datastructure.
 
-1.3. Nodes
-~~~~~~~~~~
+1.3. Nodes   节点
+~~~~~~~~~~~~~~~~~
 
 Nodes are the communication entities of the blockchain. A "node" is only
 a logical function in the sense that multiple nodes of different types
@@ -184,19 +193,32 @@ can run on the same physical server. What counts is how nodes are
 grouped in "trust domains" and associated to logical entities that
 control them.
 
+节点是区块链通信的实体。节点只是一个逻辑上的功能，多种不同功能的节点可以在同一
+服务器上运行。重要的是这些节点如何在“信任域”聚集，如何与控制他们的逻辑实体关联。
+
 There are three types of nodes:
+
+有三种类型的几点：
 
 1. **Client** or **submitting-client**: a client that submits an actual
    transaction-invocation to the endorsers, and broadcasts
    transaction-proposals to the ordering service.
+   
+1. **Client** client提交真正的交易调用给endorsers，并广播交易提议给ordering
+   service。
 
 2. **Peer**: a node that commits transactions and maintains the state
    and a copy of the ledger (see Sec, 1.2). Besides, peers can have a
    special **endorser** role.
+   
+2. **Peer** 一个节点提交交易，维护状态，账本的副本。此外，peers有特殊的
+   endorser角色。
 
 3. **Ordering-service-node** or **orderer**: a node running the
    communication service that implements a delivery guarantee, such as
    atomic or total order broadcast.
+   
+3. **orderer** 运行着实现了交货保证的通行服务，比如原子性的或全部订货广播（XXX）。
 
 The types of nodes are explained next in more detail.
 
@@ -208,14 +230,21 @@ must connect to a peer for communicating with the blockchain. The client
 may connect to any peer of its choice. Clients create and thereby invoke
 transactions.
 
+client代表了中端用户。client必须与peer相连才可以与区块链通信。client可以根据
+自己的选择连接到任意peer。clients创建调用交易。
+
 As detailed in Section 2, clients communicate with both peers and the
 ordering service.
+
+正如第二章节所说，clients会与peers和ordering service通信。
 
 1.3.2. Peer
 ^^^^^^^^^^^
 
 A peer receives ordered state updates in the form of *blocks* from the
 ordering service and maintain the state and the ledger.
+
+peer通过来自ordering service区块的形式获得有序的状态更新，并维护状态和账本。
 
 Peers can additionally take up a special role of an **endorsing peer**,
 or an **endorser**. The special function of an *endorsing peer* occurs
@@ -228,6 +257,12 @@ described later in Sections 2 and 3. In the special case of deploy
 transactions that install new chaincode the (deployment) endorsement
 policy is specified as an endorsement policy of the system chaincode.
 
+peers此外可以充当endorser的角色。endorsing peer的特殊功能伴随着特定的chaincode
+出现，存在于提交交易前endorsing交易。每一个chaincode会指定一个涉及一些endorsing
+peers的背书政策。如第二和第三章描述的那样，政策定义了有效交易背书的充分必要条件
+（主要指一些endorsers的签名）。有些特殊的情况，例如部署交易，安装新的chaincode，
+这样的背书政策认为是系统chaincode的背书政策。
+
 1.3.3. Ordering service nodes (Orderers)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -236,6 +271,9 @@ that provides delivery guarantees. The ordering service can be
 implemented in different ways: ranging from a centralized service (used
 e.g., in development and testing) to distributed protocols that target
 different network and node fault models.
+
+orderers也就是fabric通信提供了交货保证。ordering service可以有不同的实现方式，
+从集中式服务到针对不同网络和节点故障模型的分布式协议。
 
 Ordering service provides a shared *communication channel* to clients
 and peers, offering a broadcast service for messages containing
@@ -250,6 +288,13 @@ broadcast*, *atomic broadcast*, or *consensus* in the context of
 distributed systems. The communicated messages are the candidate
 transactions for inclusion in the blockchain state.
 
+ordering service为clients和peers提供了共享的通信通道，为含有交易的信息提供
+广播服务。clients与通道相连，在通道中广播信息，之后传递给所有的peers。通道
+支持传递信息原子级操作，也就是说，信息通信是全序传递和可靠的。换句话说，通道
+将相同的信息输出到所有相连的peers，并且是按相同的逻辑顺序输出。在分布式系统中，
+这个原子通信保证也被称为全序广播，原子广播或者共识。被传送的消息，是将会被包含
+在区块链状态中的候选交易。
+
 **Partitioning (ordering service channels).** Ordering service may
 support multiple *channels* similar to the *topics* of a
 publish/subscribe (pub/sub) messaging system. Clients can connects to a
@@ -260,6 +305,12 @@ may connect to multiple channels. Even though some ordering service
 implementations included with Hyperledger Fabric support multiple
 channels, for simplicity of presentation, in the rest of this
 document, we assume ordering service consists of a single channel/topic.
+
+**分区** ordering service支持多通道，类似于发布/订阅的消息系统。clients可以
+连接到指定的通道，发送消息，并在消息到达时获取消息。通道可被认为是分区 -- clients
+连接到通道，其他已经存在的通道无法感知这个通道。clients可以同时连接多个通道。
+尽管，Hyperledger Fabric实现的ordering service支持多通道，为了展示的方便，在接下来
+的文档里，我们假设ordering service只有一个通道。
 
 **Ordering service API.** Peers connect to the channel provided by the
 ordering service, via the interface provided by the ordering service.
