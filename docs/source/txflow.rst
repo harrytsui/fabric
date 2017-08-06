@@ -6,14 +6,19 @@ exchange.  The scenario includes two clients, A and B, who are buying and sellin
 radishes.  They each have a peer on the network through which they send their
 transactions and interact with the ledger.
 
+这篇文档概要了财产交换背后的交易原理。场景中包含了两个client，A和B，分别在买和卖萝卜。
+他们在网络中各有一个peer，通过peer来发送交易并和账本交互。
+
 .. image:: images/step0.png
 
-**Assumptions**
+**Assumptions设想**
 
 This flow assumes that a channel is set up and running.  The application user
 has registered and enrolled with the organization’s certificate authority (CA)
 and received back necessary cryptographic material, which is used to authenticate
 to the network.
+
+流程假设通道已经建立并正在运行。
 
 The chaincode (containing a set of key value pairs representing the initial
 state of the radish market) is installed on the peers and instantiated on the
