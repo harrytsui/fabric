@@ -18,7 +18,8 @@ has registered and enrolled with the organization’s certificate authority (CA)
 and received back necessary cryptographic material, which is used to authenticate
 to the network.
 
-流程假设通道已经建立并正在运行。
+流程假设通道已经建立并正在运行。每一个用户都已经在数字证书认证中心注册，并获得
+足够的加密内容，用以在网络中做身份认证。
 
 The chaincode (containing a set of key value pairs representing the initial
 state of the radish market) is installed on the peers and instantiated on the
@@ -26,6 +27,10 @@ channel.  The chaincode contains logic defining a set of transaction
 instructions and the agreed upon price for a radish. An endorsement policy has
 also been set for this chaincode, stating that both ``peerA`` and ``peerB`` must endorse
 any transaction.
+
+chaincode（含有萝卜市场初试状态的一系列键值对）被安装在peers上，并在通道上做了初始化。
+chaincode定义了交易的逻辑，并在一个萝卜的价格上达成了协议。chaincode设置了背书政策，
+注明peerA和peerB都要背书任何交易。
 
 .. image:: images/step1.png
 
@@ -36,6 +41,10 @@ request targets ``peerA`` and ``peerB``, who are respectively representative of
 Client A and Client B. The endorsement policy states that both peers must endorse
 any transaction, therefore the request goes to ``peerA`` and ``peerB``.
 
+发生了什么呢？ -- Client A发送了一个买萝卜的请求。这个请求目标是peerA和peerB，分别
+代表着Client A和Client B。背书政策表明两个peers必须为任何的交易背书，因此这个请求
+去往了peerA和peerB。
+
 Next, the transaction proposal is constructed.  An application leveraging a supported
 SDK (Node, Java, Python) utilizes one of the available API's which generates a
 transaction proposal.  The proposal is a request to invoke a chaincode function
@@ -43,6 +52,8 @@ so that data can be read and/or written to the ledger (i.e. write new key value
 pairs for the assets).  The SDK serves as a shim to package the transaction proposal
 into the properly architected format (protocol buffer over gRPC) and takes the user’s
 cryptographic credentials to produce a unique signature for this transaction proposal.
+
+
 
 .. image:: images/step2.png
 
